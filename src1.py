@@ -2,8 +2,8 @@ import numpy as np
 import random as r
 
 class club:
-    def __init__(self,name):
-        self.name=name
+    def __init__(self):
+        # self.name=name
         self.joueur=[]
         self.noteclub=0
         for i in range(11):
@@ -22,6 +22,14 @@ class club:
             else:
                 self.joueur[i]+=r.randint(0,1)
         self.evonoteclub()
+
+class championnat:
+    def __init__(self,equipes):
+        self.equipes=equipes
+
+
+
+
 
 
 
