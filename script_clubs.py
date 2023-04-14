@@ -8,7 +8,7 @@ class Club:
         self.nom = nom
         self.joueurs=[]
         for i in range (11):
-            self.joueurs.append(Joueur(i))
+            self.joueurs.append(script_joueur.Joueur(i))
         self.points = 0
         self.buts_marqués = 0
         self.noteclub=0
