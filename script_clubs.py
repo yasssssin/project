@@ -3,7 +3,7 @@ import random as r
 import script_joueur
 
 
-class club:
+class Club:
     def __init__(self, nom):
         self.nom = nom
         self.joueurs=[]
