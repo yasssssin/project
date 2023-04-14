@@ -11,7 +11,7 @@ class Championnat:
         self.clubs = []
         self.matches = []
         for k in Villes :
-            self.clubs.append(script_clubs.club(k))
+            self.clubs.append(script_clubs.Club(k))
     def planifier_matches(self):
 
         for i in range(len(self.clubs)):
