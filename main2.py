@@ -4,26 +4,19 @@ class Club:
         self.players = []
         self.points = 0
         self.goals_scored = 0
-
     def add_player(self, player):
         self.players.append(player)
-
     def update_points(self, points):
         self.points += points
-
     def update_goals_scored(self, goals):
         self.goals_scored += goals
-
     # Accesseurs
     def get_name(self):
         return self.name
-
     def get_players(self):
         return self.players
-
     def get_points(self):
         return self.points
-
     def get_goals_scored(self):
         return self.goals_scored
 
@@ -33,17 +26,13 @@ class Player:
         self.name = name
         self.rating = rating
         self.goals = 0
-
     def update_goals(self, goals):
         self.goals += goals
-
     # Accesseurs
     def get_name(self):
         return self.name
-
     def get_rating(self):
         return self.rating
-
     def get_goals(self):
         return self.goals
 
