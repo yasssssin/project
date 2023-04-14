@@ -42,12 +42,6 @@ class club:
 
 
 
-class championnat:
-    def __init__(self,equipes):
-        self.equipes=equipes
-
-
-
 
 
 
