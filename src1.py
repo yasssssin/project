@@ -1,6 +1,7 @@
 import numpy as np
 import random as r
 
+
 class club:
     def __init__(self, nom):
         self.nom = nom
