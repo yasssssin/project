@@ -24,5 +24,7 @@ class Championnat:
     def jouer_matches(self):
         for match in self.matches:
             match.jouer()
+    def get_clubs(self):
+        return self.clubs
 
 
