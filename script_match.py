@@ -21,21 +21,20 @@ class Match:
         self.équipe_ext.evol_butsmarqués(self.buts_ext)
 
         if self.buts_dom > self.buts_ext:
-            self.équipe_dom.update_points(3)
+            self.équipe_dom.evol_points(3)
         elif self.buts_dom == self.buts_ext:
-            self.équipe_dom.update_points(1)
-            self.équipe_ext.update_points(1)
+            self.équipe_dom.evol_points(1)
+            self.équipe_ext.evol_points(1)
         else:
-            self.équipe_ext.update_points(3)
+            self.équipe_ext.evol_points(3)
 
         for player in self.équipe_dom.get_players():
-            player.update_goals(self.buts_dom)
+            player.evol_buts(self.buts_dom)
 
         for player in self.équipe_ext.get_players():
-            player.update_goals(self.buts_ext)
+            player.evol_buts(self.buts_ext)
 
-        # Verify that the winning team has scored more goals
-        assert self.buts_dom > self.buts_ext or self.buts_dom == self.buts_ext, "Error: Winning team must have scored more goals"
+        assert self.buts_dom > self.buts_ext or self.buts_dom == self.buts_ext, "Erreur: l'équipe qui a gagné n'a pas marqué plus de buts que l'adversaire"
 
     # Accesseurs
     def get_équipe_dom(self):
