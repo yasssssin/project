@@ -39,3 +39,15 @@ class Club:
         return self.buts_marqués
     def get_noteclub(self):
         return self.noteclub
+
+
+
+
+
+
+
+
+
+
+
+
