@@ -12,7 +12,14 @@ class Joueur:
     def evol_buts(self,nb_buts):
         self.butsmarqués+=nb_buts
     def evol_notejoueur(self,resultat):
-            pass
+        pass
+
+            #if resultat=='D':
+             #   self.note+=r.randint(-1,0)
+            #elif resultat=='N':
+             #   self.note+=r.randint(-1,1)
+            #else:
+             #   self.note+=r.randint(0,1)
 
     def get_nom(self):
         return self.nom
