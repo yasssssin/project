@@ -34,6 +34,8 @@ class Club:
 
     def evol_butsmarqués(self, buts):
         self.buts_marqués += buts
+    def __str__(self):
+        return self.nom
 
 
 
