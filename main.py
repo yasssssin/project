@@ -19,5 +19,6 @@ for i in range(len(cl)):
      cl[i][2]=a
      cl[i][0]=b
 print(cl)
+# but marques même pour tous les joeurs
 
 
