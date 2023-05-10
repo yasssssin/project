@@ -6,8 +6,8 @@ class Joueur:
     def __init__(self,nom):
         self.nom=nom
         self.butsmarqués=0
-        self.note=r.randint(5,8) #note initale sur 10
-
+        self.note=0 #note initale sur 10
+        # rajouter des postes pour plus de réalisme
 
     def evol_buts(self,nb_buts):
         self.butsmarqués+=nb_buts
@@ -28,3 +28,20 @@ class Joueur:
     def get_note(self):
         return self.note
 
+class Attaquant(Joueur) :
+    def __init__(self,nom):
+        super().__init__(self,nom)
+        self.note_att=r.randint(7,9)
+        self.note_def=r.randint(3,5)
+        self.note=(self.note_def+self.note_att)/2
+    def evol_notejoueur(self,resultat):
+        pass
+
+class Defenseur(Joueur):
+    def __init__(self,nom):
+        super().__init__(self,nom)
+        self.note_att=r.randint(3,5)
+        self.note_def=r.randint(7,9)
+        self.note=(self.note_def+self.note_att)/2
+    def evol_notejoueur(self,resultat):
+        pass

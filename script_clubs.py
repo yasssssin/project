@@ -8,14 +8,13 @@ class Club:
         self.nom = nom
         self.joueurs=[]
         for i in range (11):
-            self.joueurs.append(Joueur(i))
+            self.joueurs.append(script_joueur.Joueur(i))
         self.points = 0
         self.buts_marqués = 0
         self.noteclub=0
 
     def evol_noteclub(self): #evolution de la note cumulée des joueurs de l'équipe
         for elt in self.joueurs:
-            self.noteclub=0
             self.noteclub+=elt.get_notejoueur #notejoueur définie dans la classe joueur
 
     def evol_points(self, points):
