@@ -45,16 +45,16 @@ class Match:
         else:
             self.équipe_ext.evol_points(3)
 
-        for joueur in self.équipe_dom.get_joueurs():
+        for joueur in self.équipe_dom.joueurs:
             joueur.evol_buts(self.buts_dom)
             joueur.evol_notejoueur(self.score)
-        for joueur in self.équipe_ext.get_joueurs():
+        for joueur in self.équipe_ext.joueurs:
             joueur.evol_buts(self.buts_ext)
             joueur.evol_notejoueur([self.score[1],self.score[0]])
 
 
-        équipe_dom.evol_noteclub(self)
-        équipe_ext.evol_noteclub(self)
+        self.équipe_dom.evol_noteclub()
+        self.équipe_ext.evol_noteclub()
 
         assert self.buts_dom > self.buts_ext or self.buts_dom == self.buts_ext, "Erreur: l'équipe qui a gagné n'a pas marqué plus de buts que l'adversaire"
 

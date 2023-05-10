@@ -30,7 +30,7 @@ class Joueur:
 
 class Attaquant(Joueur) :
     def __init__(self,nom):
-        super().__init__(self,nom)
+        super().__init__(self)
         self.note_att=r.randint(7,9)
         self.note_def=r.randint(3,5)
         self.note=(self.note_def+self.note_att)/2
@@ -41,7 +41,7 @@ class Attaquant(Joueur) :
             self.note_att+=0.5*r.randint(-1,0)
 class Defenseur(Joueur):
     def __init__(self,nom):
-        super().__init__(self,nom)
+        super().__init__(nom)
         self.note_att=r.randint(3,5)
         self.note_def=r.randint(7,9)
         self.note=(self.note_def+self.note_att)/2
