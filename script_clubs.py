@@ -7,8 +7,10 @@ class Club:
     def __init__(self, nom):
         self.nom = nom
         self.joueurs=[]
-        for i in range (11):
-            self.joueurs.append(script_joueur.Joueur(i))
+        for i in range (1,7):
+            self.joueurs.append(script_joueur.Defenseur(i))
+        for i in range(1,6):
+            self.joueur.append(script_joueur.Attaquant(i+6))
         self.points = 0
         self.buts_marqués = 0
         self.noteclub=0
@@ -23,8 +25,6 @@ class Club:
     def evol_butsmarqués(self, buts):
         self.buts_marqués += buts
 
-    def ajouter_joueur(self, joueur):
-        self.joueurs.append(joueur)
 
 
 #Accesseurs
