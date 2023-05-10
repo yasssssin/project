@@ -17,7 +17,7 @@ class Match:
 
         self.buts_ext = random.randint(0, 5)
 
-        self.score = (self.buts_dom, self.buts_ext)
+        self.score = [self.buts_dom, self.buts_ext]
 
         self.équipe_dom.evol_butsmarqués(self.buts_dom)
         self.équipe_ext.evol_butsmarqués(self.buts_ext)
@@ -35,7 +35,7 @@ class Match:
             joueur.evol_notejoueur(self.score)
         for joueur in self.équipe_ext.get_joueurs():
             joueur.evol_buts(self.buts_ext)
-            joueur.evol_notejoueur(self.score)
+            joueur.evol_notejoueur([self.score[1],self.score[0]])
 
 
         équipe_dom.evol_noteclub(self)
