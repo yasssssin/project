@@ -31,7 +31,8 @@ class Match:
             self.buts_ext = int(random.randint(0, 10) * B / 10)
 
 
-    self.score = [self.buts_dom, self.buts_ext]
+
+        self.score = [self.buts_dom, self.buts_ext]
 
         self.équipe_dom.evol_butsmarqués(self.buts_dom)
         self.équipe_ext.evol_butsmarqués(self.buts_ext)
