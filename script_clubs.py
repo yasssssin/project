@@ -10,14 +10,23 @@ class Club:
         for i in range (1,7):
             self.joueurs.append(script_joueur.Defenseur(i))
         for i in range(1,6):
-            self.joueur.append(script_joueur.Attaquant(i+6))
+            self.joueurs.append(script_joueur.Attaquant(i+6))
         self.points = 0
         self.buts_marqués = 0
         self.noteclub=0
-
+        for elt in self.joueurs:
+            self.noteclub+=elt.note
+        self.note_att_club=0
+        for elt in self.joueurs:
+            self.note_att_club+=elt.note_att
+            self.note_att_club=self.note_att_club/5
+        self.note_def_club=0
+        for elt in self.joueurs:
+            self.noteclub+=elt.note_def
+            self.note_def_club = self.note_def_club / 6
     def evol_noteclub(self): #evolution de la note cumulée des joueurs de l'équipe
         for elt in self.joueurs:
-            self.noteclub+=elt.get_notejoueur #notejoueur définie dans la classe joueur
+            self.noteclub+=elt.note #notejoueur définie dans la classe joueur
 
     def evol_points(self, points):
         self.points += points

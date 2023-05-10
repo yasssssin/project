@@ -13,11 +13,25 @@ class Match:
     def jouer(self):
 
         import random
-        self.buts_dom = random.randint(0, 5) #à pondérer par les notes att et def
 
-        self.buts_ext = random.randint(0, 5)
+        A= self.équipe_dom.note_att_club - self.équipe_ext.note_def_club
+        if A < 0:
+            self.buts_dom = random.randint(0,1)
+        if A = 0:
+            self.buts_dom = random.randint(0, 2)
+        if A > 0:
+            self.buts_dom = int(random.randint(0, 10)*A/10)
 
-        self.score = [self.buts_dom, self.buts_ext]
+        B = self.équipe_ext.note_att_club - self.équipe_dom.note_def_club
+        if B < 0 :
+            self.buts_ext = random.randint(0, 1)
+        if B = 0:
+            self.buts_ext = random.randint(0, 2)
+        if B > 0:
+            self.buts_ext = int(random.randint(0, 10) * B / 10)
+
+
+    self.score = [self.buts_dom, self.buts_ext]
 
         self.équipe_dom.evol_butsmarqués(self.buts_dom)
         self.équipe_ext.evol_butsmarqués(self.buts_ext)
