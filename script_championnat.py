@@ -1,17 +1,14 @@
 import script_clubs
 import script_joueur
 import script_match
+Villes = ['Paris', 'Lens', 'Marseille', 'Monaco', 'Lille', 'Rennes', 'Lyon', 'Reims','Nice', 'Lorient', 'Clermont', 'Toulouse', 'Montpellier', 'Nantes', 'Auxerre','Brest', 'Strasbourg', 'Troyes', 'Angers', 'Guingamp']
 
-Villes=['Paris','Lens','Marseille','Monaco','Lille','Rennes','Lyon','Reims',
-        'Nice','Lorient','Clermont','Toulouse','Montpellier','Nantes','Auxerre',
-        'Brest','Strasbourg','Troyes','Angers','Guingamp']
 class Championnat:
-
     def __init__(self):
-        self.clubs = []
-        self.matches = []
-        for k in Villes :
-            self.clubs.append(script_clubs.Club(k))
+            self.clubs = []
+            self.matches = []
+            for k in Villes :
+                self.clubs.append(script_clubs.Club(k))
     def planifier_matches(self):
 
         for i in range(len(self.clubs)):

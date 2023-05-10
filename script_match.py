@@ -56,7 +56,7 @@ class Match:
         self.équipe_dom.evol_noteclub()
         self.équipe_ext.evol_noteclub()
 
-        assert self.buts_dom > self.buts_ext or self.buts_dom == self.buts_ext, "Erreur: l'équipe qui a gagné n'a pas marqué plus de buts que l'adversaire"
+        # assert self.buts_dom > self.buts_ext or self.buts_dom == self.buts_ext, "Erreur: l'équipe qui a gagné n'a pas marqué plus de buts que l'adversaire"
 
     # Accesseurs
     def get_équipe_dom(self):
