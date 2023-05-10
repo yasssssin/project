@@ -8,14 +8,16 @@ class Match:
         self.équipe_ext = équipe_ext
         self.buts_dom = 0
         self.buts_ext = 0
+        self.score = 0
 
     def jouer(self):
 
         import random
-        self.buts_dom = random.randint(0, 5) #à pondérer par les notes
+        self.buts_dom = random.randint(0, 5) #à pondérer par les notes att et def
 
         self.buts_ext = random.randint(0, 5)
 
+        self.score = (self.buts_dom, self.buts_ext)
 
         self.équipe_dom.evol_butsmarqués(self.buts_dom)
         self.équipe_ext.evol_butsmarqués(self.buts_ext)
@@ -30,9 +32,14 @@ class Match:
 
         for joueur in self.équipe_dom.get_joueurs():
             joueur.evol_buts(self.buts_dom)
-
+            joueur.evol_notejoueur(self.score)
         for joueur in self.équipe_ext.get_joueurs():
             joueur.evol_buts(self.buts_ext)
+            joueur.evol_notejoueur(self.score)
+
+
+        équipe_dom.evol_noteclub(self)
+        équipe_ext.evol_noteclub(self)
 
         assert self.buts_dom > self.buts_ext or self.buts_dom == self.buts_ext, "Erreur: l'équipe qui a gagné n'a pas marqué plus de buts que l'adversaire"
 
