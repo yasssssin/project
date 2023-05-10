@@ -21,6 +21,7 @@ class Championnat:
                 self.matches.append(match_aller)
                 self.matches.append(match_retour)
 
+
     def jouer_matches(self):
         for match in self.matches:
             match.jouer()
