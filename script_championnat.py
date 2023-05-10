@@ -3,6 +3,8 @@ import script_joueur
 import script_match
 Villes = ['Paris', 'Lens', 'Marseille', 'Monaco', 'Lille', 'Rennes', 'Lyon', 'Reims','Nice', 'Lorient', 'Clermont', 'Toulouse', 'Montpellier', 'Nantes', 'Auxerre','Brest', 'Strasbourg', 'Troyes', 'Angers', 'Guingamp']
 
+# que faire si deux équipes ot le même nombre de points: les  buts marqués.
+
 class Championnat:
     def __init__(self):
             self.clubs = []
