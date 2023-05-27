@@ -2,50 +2,32 @@ import script_championnat
 import numpy as np
 
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, QTextEdit, QMessageBox, QFileDialog
-
-
-ligue1=script_championnat.Championnat()
-ligue1.planifier_matches()
-ligue1.jouer_matches()
-cl=[]
-for i in range(len(ligue1.clubs)):
-     n=[]
-     n.append(ligue1.clubs[i].points)
-     n.append(ligue1.clubs[i].nom)
-
-     cl.append(n)
-cl.sort(reverse=True)
-for i in range(len(cl)):
-     cl[i].append(i+1)
-     a=cl[i][0]
-     b=cl[i][2]
-     cl[i][2]=a
-     cl[i][0]=b
-
-# but marques même pour tous les joeurs
-
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, QTextEdit, QMessageBox, QFileDialog, QTableWidget, QTableWidgetItem
+import script_championnat
 
 class ChampionnatInterface(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("Gestionnaire de championnat")
+        self.setWindowTitle("Resultats de la ligue 1")
         self.layout = QVBoxLayout()
-
+        # On créer un onglet pour y afficher les résultats
         self.label_resultat = QLabel("Résultat du championnat:")
         self.text_resultat = QTextEdit()
         self.layout.addWidget(self.label_resultat)
         self.layout.addWidget(self.text_resultat)
+
+        # On met le bouton calculer d'abord sinon le on a l'impression que le bouton est dans 'l'onglet nom du fichier"
+        self.button_calculer = QPushButton("Simuler Championnat")
+        self.button_calculer.clicked.connect(self.calculer_championnat)
+        self.layout.addWidget(self.button_calculer)
 
         self.label_fichier = QLabel("Nom du fichier:")
         self.text_fichier = QLineEdit()
         self.layout.addWidget(self.label_fichier)
         self.layout.addWidget(self.text_fichier)
 
-        self.button_calculer = QPushButton("Calculer Championnat")
-        self.button_calculer.clicked.connect(self.calculer_championnat)
-        self.layout.addWidget(self.button_calculer)
+
 
         self.button_sauvegarder = QPushButton("Sauvegarder")
         self.button_sauvegarder.clicked.connect(self.sauvegarder_resultats)
@@ -57,6 +39,7 @@ class ChampionnatInterface(QWidget):
         self.ligue1 = script_championnat.Championnat()
         self.ligue1.planifier_matches()
         self.ligue1.jouer_matches()
+        #On met les variables ici pour qu'il n'y ai pas une équipe qui finnisse par gagner tous le temps après quelques simulations
 
         # Obtention des résultats du championnat
         resultat = "Classement du championnat :\n"
