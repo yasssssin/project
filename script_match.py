@@ -1,6 +1,7 @@
 import script_joueur
 import script_championnat
 import script_clubs
+import random as r
 
 class Match:
     def __init__(self, équipe_dom, équipe_ext):
@@ -46,17 +47,25 @@ class Match:
             self.équipe_ext.evol_points(3)
 
         for joueur in self.équipe_dom.joueurs:
-            joueur.evol_buts(self.buts_dom)
             joueur.evol_notejoueur(self.score)
+        i=self.buts_dom
+        for j in range(self.buts_dom):
+            a=r.randint(0, 10)
+            if a<6:
+                a = r.randint(0, 10)
+            self.équipe_dom.joueurs[a].evol_buts(1)
         for joueur in self.équipe_ext.joueurs:
-            joueur.evol_buts(self.buts_ext)
+
             joueur.evol_notejoueur([self.score[1],self.score[0]])
+        for j in range(self.buts_ext):
+            a=r.randint(0, 10)
+            if a<6:
+                a = r.randint(0, 10)
+            self.équipe_ext.joueurs[a].evol_buts(1)
 
 
         self.équipe_dom.evol_noteclub()
         self.équipe_ext.evol_noteclub()
-
-        # assert self.buts_dom > self.buts_ext or self.buts_dom == self.buts_ext, "Erreur: l'équipe qui a gagné n'a pas marqué plus de buts que l'adversaire"
 
     # Accesseurs
     def get_équipe_dom(self):
