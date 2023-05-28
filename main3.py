@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget, QTableWidget, QTableWidgetItem, QLabel, QHeaderView, QComboBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget, QTableWidget, QTableWidgetItem, QLabel, QHeaderView, QComboBox,QLineEdit,QMessageBox
 from PyQt5.QtChart import QChart, QChartView, QBarSet, QBarSeries, QBarCategoryAxis, QValueAxis
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter
@@ -28,6 +28,16 @@ class MainWindow(QMainWindow):
         self.stats_button = QPushButton("Afficher les statistiques des équipes", self)
         self.stats_button.clicked.connect(self.show_team_stats)
         self.layout.addWidget(self.stats_button)
+        self.label_fichier = QLabel("Nom du fichier:")
+        self.text_fichier = QLineEdit()
+        self.layout.addWidget(self.label_fichier)
+        self.layout.addWidget(self.text_fichier)
+
+
+
+        self.button_sauvegarder = QPushButton("Sauvegarder")
+        self.button_sauvegarder.clicked.connect(self.sauvegarder_resultats)
+        self.layout.addWidget(self.button_sauvegarder)
 
         self.matchday_label = QLabel("Sélectionnez une journée de match pour voir les résultats :")
         self.layout.addWidget(self.matchday_label)
@@ -43,6 +53,29 @@ class MainWindow(QMainWindow):
         self.layout.addWidget(self.table)
 
         self.main_widget.setLayout(self.layout)
+
+    def sauvegarder_resultats(self):
+        fichier = self.text_fichier.text()
+
+        if fichier == "":
+            QMessageBox.warning(self, "Erreur", "Veuillez entrer un nom de fichier.")
+            return
+
+        try:
+            with open(fichier, "w") as f:
+                for row in range(self.table.rowCount()):
+                    row_data = []
+                    for column in range(self.table.columnCount()):
+                        item = self.table.item(row, column)
+                        if item is not None:
+                            row_data.append(item.text())
+                        else:
+                            row_data.append("")  # Ajoute une chaîne vide si l'élément est None
+                    f.write("\t".join(row_data) + "\n")  # Écrit les données de la ligne séparées par une tabulation
+
+            QMessageBox.information(self, "Sauvegarde réussie", "Les résultats ont été sauvegardés avec succès.")
+        except Exception as e:
+            QMessageBox.warning(self, "Erreur", f"Erreur lors de la sauvegarde : {str(e)}")
 
     def show_results(self):
         self.table.clear()
@@ -118,8 +151,6 @@ if __name__ == "__main__":
     ligue1 = script_championnat.Championnat()
     ligue1.planifier_matches()
     ligue1.jouer_matches()
-    for e in ligue1.matches:
-        print(e)
 
 
     main_window = MainWindow(ligue1)

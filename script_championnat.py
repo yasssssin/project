@@ -3,7 +3,6 @@ import script_joueur
 import script_match
 import itertools
 Villes = ['Paris', 'Lens', 'Marseille', 'Monaco', 'Lille', 'Rennes', 'Lyon', 'Reims','Nice', 'Lorient', 'Clermont', 'Toulouse', 'Montpellier', 'Nantes', 'Auxerre','Brest', 'Strasbourg', 'Troyes', 'Angers', 'Guingamp']
-
 # que faire si deux équipes ot le même nombre de points: les  buts marqués.
 
 class Championnat:
@@ -47,37 +46,58 @@ class Championnat:
     #
     #                     dic[elts.équipe_dom.nom]=1
     #                     dic[elts.équipe_ext.nom] =1
+    # def planifier_matches(self):
+    #     nb_clubs = len(self.clubs)
+    #     nb_journees = 2*(nb_clubs - 1)
+    #
+    #     # Création de la liste des combinaisons de matchs
+    #     comb_match = []
+    #     for i in range(nb_clubs):
+    #         for j in range(nb_clubs):
+    #             if i != j:
+    #                 comb_match.append(script_match.Match(self.clubs[i], self.clubs[j]))
+    #
+    #     # Planification des matchs par journée
+    #     clubs_disponible= self.clubs[:]
+    #     clubs_disponibles=clubs_disponible.copy()# Déplacer cette ligne avant la boucle for
+    #     for journee in range(nb_journees):
+    #         matchs_journee = []
+    #
+    #         # Parcours des clubs disponibles
+    #         while len(clubs_disponible) > 1:
+    #             equipe_dom = clubs_disponible.pop(0)  # Prendre le premier club de la liste
+    #             equipe_ext = clubs_disponible.pop(0)  # Prendre le deuxième club de la liste
+    #             match = script_match.Match(equipe_dom, equipe_ext)
+    #             matchs_journee.append(match)
+    #
+    #         # Ajout des matchs de la journée au championnat
+    #         self.matches.extend(matchs_journee)
+    #
+    #         # Réorganisation des clubs disponibles pour la prochaine journée
+    #         clubs_disponibles.append(clubs_disponibles[0])
+    #         clubs_disponibles.pop(0)
+    #         clubs_disponible=clubs_disponibles.copy()
+    #
     def planifier_matches(self):
-        nb_clubs = len(self.clubs)
-        nb_journees = 2*(nb_clubs - 1)
+        presalve = []
+        desalve = []
+        groupe1 = self.clubs[:len(self.clubs)//2]
+        groupe2 = self.clubs[len(self.clubs) // 2:]
+        print(groupe1[0])
+        print(groupe2[0])
 
-        # Création de la liste des combinaisons de matchs
-        comb_match = []
-        for i in range(nb_clubs):
-            for j in range(nb_clubs):
-                if i != j:
-                    comb_match.append(script_match.Match(self.clubs[i], self.clubs[j]))
+        for i in range(len(self.clubs)-1):
+            for n in range(len(groupe1)):
+                presalve.append(script_match.Match(groupe1[n],groupe2[n]))
+                desalve.append(script_match.Match(groupe2[n],groupe1[n]))
 
-        # Planification des matchs par journée
-        clubs_disponible= self.clubs[:]
-        clubs_disponibles=clubs_disponible.copy()# Déplacer cette ligne avant la boucle for
-        for journee in range(nb_journees):
-            matchs_journee = []
+            groupe2.append(groupe1[-1])
+            groupe1=[groupe1[0]]+[groupe2[0]]+groupe1[1:-1]
+            groupe2.pop(0)
+            print(len(groupe1),len(groupe2))
 
-            # Parcours des clubs disponibles
-            while len(clubs_disponible) > 1:
-                equipe_dom = clubs_disponible.pop(0)  # Prendre le premier club de la liste
-                equipe_ext = clubs_disponible.pop(0)  # Prendre le deuxième club de la liste
-                match = script_match.Match(equipe_dom, equipe_ext)
-                matchs_journee.append(match)
-
-            # Ajout des matchs de la journée au championnat
-            self.matches.extend(matchs_journee)
-
-            # Réorganisation des clubs disponibles pour la prochaine journée
-            clubs_disponibles.append(clubs_disponibles[0])
-            clubs_disponibles.pop(0)
-            clubs_disponible=clubs_disponibles.copy()
+        self.matches.extend(presalve)
+        self.matches.extend(desalve)
 
     def jouer_matches(self):
         for match in self.matches:
