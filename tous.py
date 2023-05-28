@@ -68,14 +68,31 @@ class Match:
         self.équipe_ext = équipe_ext
         self.buts_dom = 0
         self.buts_ext = 0
+        self.score = 0
 
     def jouer(self):
 
         import random
-        self.buts_dom = random.randint(0, 5) #à pondérer par les notes
 
-        self.buts_ext = random.randint(0, 5)
+        A= self.équipe_dom.note_att_club - self.équipe_ext.note_def_club
+        if A < 0:
+            self.buts_dom = random.randint(0,1)
+        if A == 0:
+            self.buts_dom = random.randint(0, 2)
+        if A > 0:
+            self.buts_dom = int(random.randint(0, 10)*A/10)
 
+        B = self.équipe_ext.note_att_club - self.équipe_dom.note_def_club
+        if B < 0 :
+            self.buts_ext = random.randint(0, 1)
+        if B == 0:
+            self.buts_ext = random.randint(0, 2)
+        if B > 0:
+            self.buts_ext = int(random.randint(0, 10) * B / 10)
+
+
+
+        self.score = [self.buts_dom, self.buts_ext]
 
         self.équipe_dom.evol_butsmarqués(self.buts_dom)
         self.équipe_ext.evol_butsmarqués(self.buts_ext)
@@ -88,13 +105,26 @@ class Match:
         else:
             self.équipe_ext.evol_points(3)
 
-        for joueur in self.équipe_dom.get_joueurs():
-            joueur.evol_buts(self.buts_dom)
+        for joueur in self.équipe_dom.joueurs:
+            joueur.evol_notejoueur(self.score)
+        i=self.buts_dom
+        for j in range(self.buts_dom):
+            a=r.randint(0, 10)
+            if a<6:
+                a = r.randint(0, 10)
+            self.équipe_dom.joueurs[a].evol_buts(1)
+        for joueur in self.équipe_ext.joueurs:
 
-        for joueur in self.équipe_ext.get_joueurs():
-            joueur.evol_buts(self.buts_ext)
+            joueur.evol_notejoueur([self.score[1],self.score[0]])
+        for j in range(self.buts_ext):
+            a=r.randint(0, 10)
+            if a<6:
+                a = r.randint(0, 10)
+            self.équipe_ext.joueurs[a].evol_buts(1)
 
-        assert self.buts_dom > self.buts_ext or self.buts_dom == self.buts_ext, "Erreur: l'équipe qui a gagné n'a pas marqué plus de buts que l'adversaire"
+
+        self.équipe_dom.evol_noteclub()
+        self.équipe_ext.evol_noteclub()
 
     # Accesseurs
     def get_équipe_dom(self):
@@ -108,7 +138,6 @@ class Match:
 
     def get_buts_ext(self):
         return self.buts_ext
-
 
 class Championnat:
 
