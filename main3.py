@@ -118,6 +118,8 @@ if __name__ == "__main__":
     ligue1 = script_championnat.Championnat()
     ligue1.planifier_matches()
     ligue1.jouer_matches()
+    for e in ligue1.matches:
+        print(e)
 
 
     main_window = MainWindow(ligue1)

@@ -79,3 +79,5 @@ class Match:
 
     def get_buts_ext(self):
         return self.buts_ext
+    def __str__(self):
+        return '{} vs {}'.format(self.équipe_dom.nom,self.équipe_ext.nom)
