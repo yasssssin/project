@@ -7,6 +7,7 @@ class Club:
     def __init__(self, nom):
         self.nom = nom
         self.joueurs=[]
+        #on ajoute 6 joueurs défensifs et 5 joueurs offensifs pour créer une équipe
         for i in range (1,7):
             self.joueurs.append(script_joueur.Defenseur(i))
         for i in range(1,6):
@@ -14,6 +15,8 @@ class Club:
         self.points = 0
         self.buts_marqués = 0
         self.noteclub=0
+        #on définit la note du club comme la somme des notes des joueurs
+        #et les notes d'attaque et de défense comme les moyennes des joueurs la composant
         for elt in self.joueurs:
             self.noteclub+=elt.note
         self.note_att_club=0
