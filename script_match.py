@@ -17,11 +17,11 @@ class Match:
 
         A= self.équipe_dom.note_att_club - self.équipe_ext.note_def_club
         if A < 0:
-            self.buts_dom = random.randint(0,1)
+            self.buts_dom = int(random.randint(0,10)/(-5*A))
         if A == 0:
             self.buts_dom = random.randint(0, 2)
         if A > 0:
-            self.buts_dom = int(random.randint(0, 10)*A/10)
+            self.buts_dom = int(random.randint(0, 10)*A/5)
 
         B = self.équipe_ext.note_att_club - self.équipe_dom.note_def_club
         if B < 0 :
@@ -29,7 +29,7 @@ class Match:
         if B == 0:
             self.buts_ext = random.randint(0, 2)
         if B > 0:
-            self.buts_ext = int(random.randint(0, 10) * B / 10)
+            self.buts_ext = int(random.randint(0, 10) * B/5)
 
 
 
