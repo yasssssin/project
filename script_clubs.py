@@ -26,6 +26,7 @@ class Club:
             self.note_def_club = self.note_def_club / 6
 
     def evol_noteclub(self): #evolution de la note cumulée des joueurs de l'équipe
+        self.noteclub=0
         for elt in self.joueurs:
             self.noteclub+=elt.note #notejoueur définie dans la classe joueur
 
