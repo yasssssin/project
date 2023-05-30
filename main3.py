@@ -151,8 +151,6 @@ if __name__ == "__main__":
     ligue1 = script_championnat.Championnat()
     ligue1.planifier_matches()
     ligue1.jouer_matches()
-
-
     main_window = MainWindow(ligue1)
     main_window.show()
 

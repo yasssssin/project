@@ -3,105 +3,41 @@ import script_joueur
 import script_match
 import itertools
 Villes = ['Paris', 'Lens', 'Marseille', 'Monaco', 'Lille', 'Rennes', 'Lyon', 'Reims','Nice', 'Lorient', 'Clermont', 'Toulouse', 'Montpellier', 'Nantes', 'Auxerre','Brest', 'Strasbourg', 'Troyes', 'Angers', 'Guingamp']
-# que faire si deux équipes ot le même nombre de points: les  buts marqués.
 
 class Championnat:
+    # intitialisation des variables d'instance
     def __init__(self):
             self.clubs = []
             self.matches = []
             for k in Villes :
                 self.clubs.append(script_clubs.Club(k))
-    # def planifier_matches(self):
-    #
-    #     for i in range(len(self.clubs)):
-    #         for j in range(i + 1, len(self.clubs)):
-    #             match_aller = script_match.Match(self.clubs[i], self.clubs[j])
-    #             match_retour = script_match.Match(self.clubs[j], self.clubs[i])
-    #             self.matches.append(match_aller)
-    #             self.matches.append(match_retour)
-    # def planifier_matches(self):
-    #     comb_match=[]
-    #
-    #     for i in range(len(self.clubs)):
-    #         for j in range(len(self.clubs)):
-    #             if i!=j:
-    #                 comb_match.append(script_match.Match(self.clubs[i], self.clubs[j]))
-    #     nbjournées=2*len(self.clubs)-2
-    #     for i in range(nbjournées):
-    #
-    #         dic={}
-    #         for elt in self.clubs:
-    #             dic[elt.nom]=0
-    #         okk=comb_match.copy()
-    #         print(len(comb_match))
-    #         for elts in okk:
-    #                 if dic[elts.équipe_dom.nom]==0 and dic[elts.équipe_ext.nom]==0:
-    #                     self.matches.append(elts)
-    #                     ok=comb_match.copy()
-    #                     comb_match=[]
-    #                     for let in ok:
-    #                         if elts.équipe_dom.nom!=let.équipe_dom.nom and elts.équipe_ext.nom!=let.équipe_ext.nom:
-    #                             comb_match.append(let)
-    #
-    #
-    #                     dic[elts.équipe_dom.nom]=1
-    #                     dic[elts.équipe_ext.nom] =1
-    # def planifier_matches(self):
-    #     nb_clubs = len(self.clubs)
-    #     nb_journees = 2*(nb_clubs - 1)
-    #
-    #     # Création de la liste des combinaisons de matchs
-    #     comb_match = []
-    #     for i in range(nb_clubs):
-    #         for j in range(nb_clubs):
-    #             if i != j:
-    #                 comb_match.append(script_match.Match(self.clubs[i], self.clubs[j]))
-    #
-    #     # Planification des matchs par journée
-    #     clubs_disponible= self.clubs[:]
-    #     clubs_disponibles=clubs_disponible.copy()# Déplacer cette ligne avant la boucle for
-    #     for journee in range(nb_journees):
-    #         matchs_journee = []
-    #
-    #         # Parcours des clubs disponibles
-    #         while len(clubs_disponible) > 1:
-    #             equipe_dom = clubs_disponible.pop(0)  # Prendre le premier club de la liste
-    #             equipe_ext = clubs_disponible.pop(0)  # Prendre le deuxième club de la liste
-    #             match = script_match.Match(equipe_dom, equipe_ext)
-    #             matchs_journee.append(match)
-    #
-    #         # Ajout des matchs de la journée au championnat
-    #         self.matches.extend(matchs_journee)
-    #
-    #         # Réorganisation des clubs disponibles pour la prochaine journée
-    #         clubs_disponibles.append(clubs_disponibles[0])
-    #         clubs_disponibles.pop(0)
-    #         clubs_disponible=clubs_disponibles.copy()
-    #
+
+    # creation du calendrier des matches
     def planifier_matches(self):
-        presalve = []
-        desalve = []
+        matchesallers = []
+        matchesretour = []
+        #on separe en deux les équipes
         groupe1 = self.clubs[:len(self.clubs)//2]
         groupe2 = self.clubs[len(self.clubs) // 2:]
         print(groupe1[0])
         print(groupe2[0])
-
+        # on crée tous les matches selon la méthode de rotation autour du premier élément
         for i in range(len(self.clubs)-1):
             for n in range(len(groupe1)):
-                presalve.append(script_match.Match(groupe1[n],groupe2[n]))
-                desalve.append(script_match.Match(groupe2[n],groupe1[n]))
+                matchesallers.append(script_match.Match(groupe1[n],groupe2[n]))
+                matchesretour.append(script_match.Match(groupe2[n],groupe1[n]))
 
             groupe2.append(groupe1[-1])
             groupe1=[groupe1[0]]+[groupe2[0]]+groupe1[1:-1]
             groupe2.pop(0)
-            print(len(groupe1),len(groupe2))
 
-        self.matches.extend(presalve)
-        self.matches.extend(desalve)
-
+        self.matches.extend(matchesallers)
+        self.matches.extend(matchesretour)
+    # méthode pour simuler les matches du championnat
     def jouer_matches(self):
         for match in self.matches:
             match.jouer()
+    # accésseurs
     def get_clubs(self):
         return self.clubs
 
