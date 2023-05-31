@@ -58,7 +58,7 @@ class MainWindow(QMainWindow):
         self.axes_y=QValueAxis()
 
         self.axes_y.setRange(0, max([club.buts_marques for club in self.championnat.clubs]) + 5)
-        #On rajoute les axes et on choisi les axes ou ils vont (à gauche ou en bas avec Qt .AligneLeft
+        #On rajoute les axes et on choisit les axes ou ils vont (à gauche ou en bas avec Qt .AligneLeft
         self.chart.addAxis(self.axes_y, Qt.AlignLeft)
         self.axes_x = QBarCategoryAxis()
         categories = [club.nom for club in self.championnat.clubs]
@@ -87,7 +87,7 @@ class MainWindow(QMainWindow):
         self.table.setRowCount(len(self.championnat.clubs))
         self.table.setColumnCount(4)
         self.table.setHorizontalHeaderLabels(["Club", "Points", "Buts marques", "Note du club"])
-        #On rempli le tableau avec les nom,point buts marques et note club
+        #On remplit le tableau avec les nom,point buts marques et note club
         for i, club in enumerate(sorted(self.championnat.clubs, key=lambda x: (x.points,x.buts_marques), reverse=True)):
             self.table.setItem(i, 0, QTableWidgetItem(club.nom))
             self.table.setItem(i, 1, QTableWidgetItem(str(club.points)))
@@ -98,7 +98,7 @@ class MainWindow(QMainWindow):
 
     def afficher_stats(self):
         self.table.clear()
-        # il faut vider la table pour pas que les anciennes valeurs ne restent a chaque fois que l'on appuis sur le bouton
+        # il faut vider la table pour ne pas que les anciennes valeurs ne restent a chaque fois que l'on appuis sur le bouton
         self.table.setRowCount(0)
         self.table.setColumnCount(0)
         # on rempli les bars à mettre dans le diagramme
