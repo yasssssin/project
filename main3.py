@@ -61,15 +61,15 @@ class MainWindow(QMainWindow):
 
         try:
             with open(fichier, "w") as f:
-                for row in range(self.table.rowCount()):
-                    row_data = []
+                for ligne in range(self.table.rowCount()):
+                    lignes = []
                     for column in range(self.table.columnCount()):
-                        item = self.table.item(row, column)
+                        item = self.table.item(ligne, column)
                         if item is not None:
-                            row_data.append(item.text())
+                            lignes.append(item.text())
                         else:
-                            row_data.append("")  # Ajoute une chaîne vide si l'élément est None
-                    f.write("\t".join(row_data) + "\n")  # Écrit les données de la ligne séparées par une tabulation
+                            lignes.append("")  # Ajoute une chaîne vide si l'élément est None
+                    f.write("\t".join(lignes) + "\n")  # Écrit les données de la ligne séparées par une tabulation
 
             QMessageBox.information(self, "Sauvegarde réussie", "Les résultats ont été sauvegardés avec succès.")
         except Exception as e:
