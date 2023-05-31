@@ -16,10 +16,10 @@ class Championnat:
     def planifier_matches(self):
         matchesallers = []
         matchesretour = []
-        #on separe en deux les équipes
+        #on separe en deux les equipes
         groupe1 = self.clubs[:len(self.clubs)//2]
         groupe2 = self.clubs[len(self.clubs) // 2:]
-        # on crée tous les matches selon la méthode de rotation autour du premier élément
+        # on cree tous les matches selon la methode de rotation autour du premier element
         for i in range(len(self.clubs)-1):
             for n in range(len(groupe1)):
                 matchesallers.append(script_match.Match(groupe1[n],groupe2[n]))
@@ -31,11 +31,11 @@ class Championnat:
 
         self.matches.extend(matchesallers)
         self.matches.extend(matchesretour)
-    # méthode pour simuler les matches du championnat
+    # methode pour simuler les matches du championnat
     def jouer_matches(self):
         for match in self.matches:
             match.jouer()
-    # accésseurs
+    # accesseurs
     def get_clubs(self):
         return self.clubs
 
