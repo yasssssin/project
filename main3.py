@@ -9,17 +9,18 @@ import script_championnat
 class MainWindow(QMainWindow):
     def __init__(self, championnat):
         super().__init__()
-
+        # on initialise ici le championnat pour avoir les données necesaire à l'iu.
         self.championnat = championnat
         self.matches = self.championnat.matches
 
+        #titre pour l'iu
         self.setWindowTitle("Championnat de Foot")
-        self.setGeometry(100, 100, 800, 600)
-
+        #création de la fenetre et de sa mise en page à organiser plus tard
         self.main_widget = QWidget()
         self.setCentralWidget(self.main_widget)
-
         self.layout = QVBoxLayout()
+
+        #Créations des buttons et input box pour l'interface.
 
         self.results_button = QPushButton("Afficher les résultats du championnat", self)
         self.results_button.clicked.connect(self.show_results)
@@ -28,6 +29,7 @@ class MainWindow(QMainWindow):
         self.stats_button = QPushButton("Afficher les statistiques des équipes", self)
         self.stats_button.clicked.connect(self.show_team_stats)
         self.layout.addWidget(self.stats_button)
+
         self.label_fichier = QLabel("Nom du fichier:")
         self.text_fichier = QLineEdit()
         self.layout.addWidget(self.label_fichier)
@@ -44,7 +46,7 @@ class MainWindow(QMainWindow):
 
         self.matchday_combo = QComboBox()
         for i in range(1, int(len(self.matches) / len(self.championnat.clubs)) + 1):
-            self.matchday_combo.addItem(f"Journée {i}")
+            self.matchday_combo.addItem("Journée {}".format(i))
         self.layout.addWidget(self.matchday_combo)
 
         self.matchday_combo.currentIndexChanged.connect(self.show_matchday_results)
@@ -56,10 +58,6 @@ class MainWindow(QMainWindow):
 
     def sauvegarder_resultats(self):
         fichier = self.text_fichier.text()
-
-        if fichier == "":
-            QMessageBox.warning(self, "Erreur", "Veuillez entrer un nom de fichier.")
-            return
 
         try:
             with open(fichier, "w") as f:
@@ -83,7 +81,7 @@ class MainWindow(QMainWindow):
         self.table.setColumnCount(4)
         self.table.setHorizontalHeaderLabels(["Club", "Points", "Buts marqués", "Note du club"])
 
-        for i, club in enumerate(sorted(self.championnat.clubs, key=lambda x: x.points, reverse=True)):
+        for i, club in enumerate(sorted(self.championnat.clubs, key=lambda x: (x.points,x.buts_marqués), reverse=True)):
             self.table.setItem(i, 0, QTableWidgetItem(club.nom))
             self.table.setItem(i, 1, QTableWidgetItem(str(club.points)))
             self.table.setItem(i, 2, QTableWidgetItem(str(club.buts_marqués)))
@@ -100,7 +98,7 @@ class MainWindow(QMainWindow):
 
         bar_set = QBarSet("Buts marqués")
         for club in self.championnat.clubs:
-            bar_set << club.buts_marqués
+             bar_set.append(club.buts_marqués)
 
         series = QBarSeries()
         series.append(bar_set)
