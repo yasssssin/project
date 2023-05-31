@@ -22,9 +22,9 @@ class MainWindow(QMainWindow):
 
         #Créations des buttons et input box pour l'interface.
 
-        self.results_button = QPushButton("Afficher les résultats du championnat", self)
-        self.results_button.clicked.connect(self.afficher_results)
-        self.layout.addWidget(self.results_button)
+        self.resultats_button = QPushButton("Afficher les résultats du championnat", self)
+        self.resultats_button.clicked.connect(self.afficher_resultats)
+        self.layout.addWidget(self.resultats_button)
 
         self.stats_button = QPushButton("Afficher les statistiques des équipes", self)
         self.stats_button.clicked.connect(self.afficher_stats)
@@ -41,15 +41,15 @@ class MainWindow(QMainWindow):
         self.button_sauvegarder.clicked.connect(self.sauvegarder_resultats)
         self.layout.addWidget(self.button_sauvegarder)
 
-        self.matchday_label = QLabel("Sélectionnez une journée de match pour voir les résultats :")
-        self.layout.addWidget(self.matchday_label)
+        self.journée_label = QLabel("Sélectionnez une journée de match pour voir les résultats :")
+        self.layout.addWidget(self.journée_label)
 
-        self.matchday_combo = QComboBox()
+        self.journée_combo = QComboBox()
         for i in range(1, int(len(self.matches) / len(self.championnat.clubs)) + 1):
-            self.matchday_combo.addItem("Journée {}".format(i))
-        self.layout.addWidget(self.matchday_combo)
+            self.journée_combo.addItem("Journée {}".format(i))
+        self.layout.addWidget(self.journée_combo)
 
-        self.matchday_combo.currentIndexChanged.connect(self.afficher_matchday_results)
+        self.journée_combo.currentIndexChanged.connect(self.afficher_résultats_journée)
 
         self.table = QTableWidget()
         self.layout.addWidget(self.table)
@@ -75,7 +75,7 @@ class MainWindow(QMainWindow):
         except Exception as e:
             QMessageBox.warning(self, "Erreur", f"Erreur lors de la sauvegarde : {str(e)}")
 
-    def afficher_results(self):
+    def afficher_resultats(self):
         self.table.clear()
         self.table.setRowCount(len(self.championnat.clubs))
         self.table.setColumnCount(4)
@@ -121,22 +121,22 @@ class MainWindow(QMainWindow):
 
         self.layout.addWidget(chart_view)
 
-    def afficher_matchday_results(self, index):
-        matchday = index + 1
-        num_teams = len(self.championnat.clubs)
-        matches_per_round = num_teams // 2
+    def afficher_résultats_journée(self, index):
+        journée = index + 1
+        num_equipes = len(self.championnat.clubs)
+        matches_per_round = num_equipes // 2
 
-        start_index = (matchday - 1) * matches_per_round
+        start_index = (journée - 1) * matches_per_round
         end_index = start_index + matches_per_round
 
-        matchday_matches = self.matches[start_index:end_index]
+        journée_matches = self.matches[start_index:end_index]
 
         self.table.clear()
-        self.table.setRowCount(len(matchday_matches))
+        self.table.setRowCount(len(journée_matches))
         self.table.setColumnCount(3)
         self.table.setHorizontalHeaderLabels(["Équipe domicile", "Équipe extérieure", "Score"])
 
-        for i, match in enumerate(matchday_matches):
+        for i, match in enumerate(journée_matches):
             self.table.setItem(i, 0, QTableWidgetItem(match.équipe_dom.nom))
             self.table.setItem(i, 1, QTableWidgetItem(match.équipe_ext.nom))
             self.table.setItem(i, 2, QTableWidgetItem(f"{match.buts_dom} - {match.buts_ext}"))
