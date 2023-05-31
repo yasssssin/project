@@ -124,10 +124,10 @@ class MainWindow(QMainWindow):
     def afficher_résultats_journée(self, index):
         journée = index + 1
         num_equipes = len(self.championnat.clubs)
-        matches_per_round = num_equipes // 2
+        matches_par_journée = num_equipes // 2
 
-        start_index = (journée - 1) * matches_per_round
-        end_index = start_index + matches_per_round
+        start_index = (journée - 1) * matches_par_journée
+        end_index = start_index + matches_par_journée
 
         journée_matches = self.matches[start_index:end_index]
 
