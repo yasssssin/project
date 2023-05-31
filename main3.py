@@ -70,13 +70,13 @@ class MainWindow(QMainWindow):
         fichier = self.text_fichier.text()
 # On fait une exeption ici pour que l"='eereur s'affiche dans l'interface.
         try:
-            with open(fichier, "w") as f:
-                for ligne in range(self.table.rowCount()):
+            f=open(fichier, "w")
+            for ligne in range(self.table.rowCount()):
                     lignes = []
                     for colonne in range(self.table.columnCount()):
                         lignes.append(self.table.item(ligne, colonne).text())
                     f.write("\t".join(lignes) + "\n")
-
+            f.close()
             QMessageBox.information(self, "Sauvegarde reussie", "Les resultats ont ete sauvegardes avec succès.")
         except Exception as e:
             QMessageBox.warning(self, "Erreur", "Erreur lors de la sauvegarde : {}".format(str(e)))
