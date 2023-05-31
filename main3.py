@@ -4,7 +4,6 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout,
 from PyQt5.QtChart import QChart, QChartView, QBarSet, QBarSeries, QBarCategoryAxis, QValueAxis
 from PyQt5.QtCore import Qt
 
-
 class MainWindow(QMainWindow):
     def __init__(self, championnat):
         super().__init__()
@@ -45,7 +44,7 @@ class MainWindow(QMainWindow):
         for i in range(1, 2*(len(self.championnat.clubs)-1)+1):
             self.journee_combo.addItem("Journee {}".format(i))
         self.layout.addWidget(self.journee_combo)
-
+        #definition du numéro de journée avec le numero de la selection dans le combo
         self.journee_combo.currentIndexChanged.connect(self.afficher_journee_resultats)
 
 #création de la table pour y mettre les résultats(table partagée pour tous les résultats)
@@ -53,17 +52,18 @@ class MainWindow(QMainWindow):
         self.layout.addWidget(self.table)
 
         self.widget_f.setLayout(self.layout)
-
+# creation des objet du graphe en baton
         self.chart = QChart()
-        self.chart_view = QChartView(self.chart)
-        self.axis_y=QValueAxis()
+        self.chart_plot = QChartView(self.chart)
+        self.axes_y=QValueAxis()
 
-        self.axis_y.setRange(0, max([club.buts_marques for club in self.championnat.clubs]) + 5)
-        self.chart.addAxis(self.axis_y, Qt.AlignLeft)
-        self.axis_x = QBarCategoryAxis()
+        self.axes_y.setRange(0, max([club.buts_marques for club in self.championnat.clubs]) + 5)
+        #On rajoute les axes et on choisi les axes ou ils vont (à gauche ou en bas avec Qt .AligneLeft
+        self.chart.addAxis(self.axes_y, Qt.AlignLeft)
+        self.axes_x = QBarCategoryAxis()
         categories = [club.nom for club in self.championnat.clubs]
-        self.axis_x.append(categories)
-        self.chart.addAxis(self.axis_x, Qt.AlignBottom)
+        self.axes_x.append(categories)
+        self.chart.addAxis(self.axes_x, Qt.AlignBottom)
 
 
     def sauvegarder_resultats(self):
@@ -93,54 +93,56 @@ class MainWindow(QMainWindow):
             self.table.setItem(i, 1, QTableWidgetItem(str(club.points)))
             self.table.setItem(i, 2, QTableWidgetItem(str(club.buts_marques)))
             self.table.setItem(i, 3, QTableWidgetItem(str(club.noteclub)))
-        # fonction pour mettre la bonne taille des colonnes
+        # fonction pour mettre la bonne taille pour la largeur des colonnes
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
     def afficher_stats(self):
         self.table.clear()
+        # il faut vider la table pour pas que les anciennes valeurs ne restent a chaque fois que l'on appuis sur le bouton
         self.table.setRowCount(0)
         self.table.setColumnCount(0)
-
-        bar_set = QBarSet("Buts marques")
+        # on rempli les bars à mettre dans le diagramme
+        bar = QBarSet("Buts marques")
         for club in self.championnat.clubs:
-             bar_set.append(club.buts_marques)
+             bar.append(club.buts_marques)
         if len(self.chart.series()) > 0:
             self.chart.removeSeries(self.chart.series()[0])
+        # on crée la liste de bar qui remplira le graph
+        liste_bar = QBarSeries()
+        liste_bar.append(bar)
 
-        series = QBarSeries()
-        series.append(bar_set)
-
-        self.chart.addSeries(series)
-
-        series.attachAxis(self.axis_x)
-        series.attachAxis(self.axis_y)
-        self.chart_view.resize(2240,1300)
-        self.chart_view.close()
-        self.chart_view.show()
-        # self.layout.addWidget(self.chart_view)
-
+        self.chart.addSeries(liste_bar)
+        self.chart_plot.resize(2240,1300)
+        # meme soucis ici la fenetre reste derrierre l'interface si on la ferme pas avant d'appuyer sur le bouton
+        self.chart_plot.close()
+        self.chart_plot.show()
+#methode pour le bouton combo et les differentes journées.
     def afficher_journee_resultats(self, journee):
-        nb_teams = len(self.championnat.clubs)
-        matches_par_journee = nb_teams // 2
+        #definition des valeurs pour les journée(nb de matchs,quels matches début et fin dans la liste des matches pour chaque journées)
+        nb_equipe = len(self.championnat.clubs)
+        matches_par_journee = nb_equipe // 2
 
         debut_jour = (journee) * matches_par_journee
         fin_jour = debut_jour + matches_par_journee
 
         matches_jour = self.matches[debut_jour:fin_jour]
-
+        #creation de la table avec la legende
         self.table.clear()
         self.table.setRowCount(len(matches_jour))
         self.table.setColumnCount(3)
         self.table.setHorizontalHeaderLabels(["equipe domicile", "equipe exterieure", "Score"])
-
+        #t le remplisssage du classement et autres attributs d'une equipe
         for i, match in enumerate(matches_jour):
             self.table.setItem(i, 0, QTableWidgetItem(match.equipe_dom.nom))
             self.table.setItem(i, 1, QTableWidgetItem(match.equipe_ext.nom))
             self.table.setItem(i, 2, QTableWidgetItem("{} - {}".format(match.buts_dom,match.buts_ext)))
-
+# même chose réglage de la largeur des colonnes
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+# lanceur de la simulation ouverture de la MainWindow
+
 
 def lancerlesimulateur():
+    #ouverture de l'interface
     app = QApplication(sys.argv)
 
     ligue1 = script_championnat.Championnat()
@@ -148,6 +150,7 @@ def lancerlesimulateur():
     ligue1.jouer_matches()
     main_window = MainWindow(ligue1)
     main_window.show()
+    main_window.resize(2200,1300)
 
     sys.exit(app.exec_())
 
