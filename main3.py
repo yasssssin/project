@@ -22,9 +22,9 @@ class MainWindow(QMainWindow):
 
         #Créations des buttons et input box pour l'interface.
 
-        self.resultats_button = QPushButton("Afficher les résultats du championnat", self)
-        self.resultats_button.clicked.connect(self.afficher_resultats)
-        self.layout.addWidget(self.resultats_button)
+        self.results_button = QPushButton("Afficher les résultats du championnat", self)
+        self.results_button.clicked.connect(self.afficher_results)
+        self.layout.addWidget(self.results_button)
 
         self.stats_button = QPushButton("Afficher les statistiques des équipes", self)
         self.stats_button.clicked.connect(self.afficher_stats)
