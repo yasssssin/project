@@ -80,19 +80,20 @@ class MainWindow(QMainWindow):
             QMessageBox.information(self, "Sauvegarde reussie", "Les resultats ont ete sauvegardes avec succès.")
         except Exception as e:
             QMessageBox.warning(self, "Erreur", "Erreur lors de la sauvegarde : {}".format(str(e)))
-
+#affichage des resultats dans un tableau
     def afficher_resultats(self):
         self.table.clear()
+        # On defini la taille du tableau
         self.table.setRowCount(len(self.championnat.clubs))
         self.table.setColumnCount(4)
         self.table.setHorizontalHeaderLabels(["Club", "Points", "Buts marques", "Note du club"])
-
+        #On rempli le tableau avec les nom,point buts marques et note club
         for i, club in enumerate(sorted(self.championnat.clubs, key=lambda x: (x.points,x.buts_marques), reverse=True)):
             self.table.setItem(i, 0, QTableWidgetItem(club.nom))
             self.table.setItem(i, 1, QTableWidgetItem(str(club.points)))
             self.table.setItem(i, 2, QTableWidgetItem(str(club.buts_marques)))
             self.table.setItem(i, 3, QTableWidgetItem(str(club.noteclub)))
-
+        # fonction pour mettre la bonne taille des colonnes
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
     def afficher_stats(self):
