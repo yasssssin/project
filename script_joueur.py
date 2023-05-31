@@ -37,7 +37,7 @@ class Attaquant(Joueur) :
     def evol_notejoueur(self,resultat):
         if resultat[0]>=1 and self.note_att<10:
             self.note_att+=0.5*r.randint(0,1)
-        elif resultat[0]<=1 and self.note_att>0:
+        elif resultat[0]<1 and self.note_att>0:
             self.note_att+=0.5*r.randint(-1,0)
 
 
@@ -52,5 +52,5 @@ class Defenseur(Joueur):
     def evol_notejoueur(self,resultat):
         if resultat[1] >= 2 and self.note_def>0:
             self.note_def += 0.5 * r.randint(-1, 0)
-        if resultat[1] < 2 and self.note_def<0:
+        if resultat[1] < 2 and self.note_def<10:
             self.note_def += 0.5 * r.randint(0, 1)
