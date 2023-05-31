@@ -57,22 +57,19 @@ class MainWindow(QMainWindow):
 
     def sauvegarder_resultats(self):
         fichier = self.text_fichier.text()
-
+# On fait une exeption ici pour que l"='eereur s'affiche dans l'interface.
         try:
             with open(fichier, "w") as f:
                 for ligne in range(self.table.rowCount()):
                     lignes = []
-                    for column in range(self.table.columnCount()):
-                        item = self.table.item(ligne, column)
-                        if item is not None:
-                            lignes.append(item.text())
-                        else:
-                            lignes.append("")  # Ajoute une chaîne vide si l'element est None
+                    for colonne in range(self.table.columnCount()):
+                        lignes.append(self.table.item(ligne, colonne).text())
+  # Ajoute une chaîne vide si l'element est None
                     f.write("\t".join(lignes) + "\n")  # ecrit les donnees de la ligne separees par une tabulation
 
             QMessageBox.information(self, "Sauvegarde reussie", "Les resultats ont ete sauvegardes avec succès.")
         except Exception as e:
-            QMessageBox.warning(self, "Erreur", f"Erreur lors de la sauvegarde : {str(e)}")
+            QMessageBox.warning(self, "Erreur", "Erreur lors de la sauvegarde : {}".format(str(e)))
 
     def afficher_resultats(self):
         self.table.clear()
