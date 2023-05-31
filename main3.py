@@ -7,7 +7,7 @@ from PyQt5.QtCore import Qt
 class MainWindow(QMainWindow):
     def __init__(self, championnat):
         super().__init__()
-        # on initialise ici le championnat pour avoir les donnees necesaire à l'iu.
+        # on initialise ici le championnat pour avoir les donnees necesaires à l'iu.
         self.championnat = championnat
         self.matches = self.championnat.matches
 
