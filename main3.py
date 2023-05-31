@@ -83,7 +83,7 @@ class MainWindow(QMainWindow):
 #affichage des resultats dans un tableau
     def afficher_resultats(self):
         self.table.clear()
-        # On defini la taille du tableau
+        # On definit la taille du tableau
         self.table.setRowCount(len(self.championnat.clubs))
         self.table.setColumnCount(4)
         self.table.setHorizontalHeaderLabels(["Club", "Points", "Buts marques", "Note du club"])
