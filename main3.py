@@ -3,7 +3,6 @@ import script_championnat
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget, QTableWidget, QTableWidgetItem, QLabel, QHeaderView, QComboBox,QLineEdit,QMessageBox
 from PyQt5.QtChart import QChart, QChartView, QBarSet, QBarSeries, QBarCategoryAxis, QValueAxis
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QKeySequence
 
 
 class MainWindow(QMainWindow):
