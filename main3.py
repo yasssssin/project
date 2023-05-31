@@ -113,7 +113,7 @@ class MainWindow(QMainWindow):
 
         series.attachAxis(self.axis_x)
         series.attachAxis(self.axis_y)
-        self.chart_view.resize(800,600)
+        self.chart_view.resize(2240,1300)
         self.chart_view.close()
         self.chart_view.show()
         # self.layout.addWidget(self.chart_view)
