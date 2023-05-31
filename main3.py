@@ -23,11 +23,11 @@ class MainWindow(QMainWindow):
         #Créations des buttons et input box pour l'interface.
 
         self.results_button = QPushButton("Afficher les résultats du championnat", self)
-        self.results_button.clicked.connect(self.show_results)
+        self.results_button.clicked.connect(self.afficher_results)
         self.layout.addWidget(self.results_button)
 
         self.stats_button = QPushButton("Afficher les statistiques des équipes", self)
-        self.stats_button.clicked.connect(self.show_team_stats)
+        self.stats_button.clicked.connect(self.afficher_stats)
         self.layout.addWidget(self.stats_button)
 
         self.label_fichier = QLabel("Nom du fichier:")
@@ -49,7 +49,7 @@ class MainWindow(QMainWindow):
             self.matchday_combo.addItem("Journée {}".format(i))
         self.layout.addWidget(self.matchday_combo)
 
-        self.matchday_combo.currentIndexChanged.connect(self.show_matchday_results)
+        self.matchday_combo.currentIndexChanged.connect(self.afficher_matchday_results)
 
         self.table = QTableWidget()
         self.layout.addWidget(self.table)
@@ -75,7 +75,7 @@ class MainWindow(QMainWindow):
         except Exception as e:
             QMessageBox.warning(self, "Erreur", f"Erreur lors de la sauvegarde : {str(e)}")
 
-    def show_results(self):
+    def afficher_results(self):
         self.table.clear()
         self.table.setRowCount(len(self.championnat.clubs))
         self.table.setColumnCount(4)
@@ -89,7 +89,7 @@ class MainWindow(QMainWindow):
 
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
-    def show_team_stats(self):
+    def afficher_stats(self):
         self.table.clear()
         self.table.setRowCount(0)
         self.table.setColumnCount(0)
@@ -121,7 +121,7 @@ class MainWindow(QMainWindow):
 
         self.layout.addWidget(chart_view)
 
-    def show_matchday_results(self, index):
+    def afficher_matchday_results(self, index):
         matchday = index + 1
         num_teams = len(self.championnat.clubs)
         matches_per_round = num_teams // 2
