@@ -3,7 +3,7 @@ import script_championnat
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget, QTableWidget, QTableWidgetItem, QLabel, QHeaderView, QComboBox,QLineEdit,QMessageBox
 from PyQt5.QtChart import QChart, QChartView, QBarSet, QBarSeries, QBarCategoryAxis, QValueAxis
 from PyQt5.QtCore import Qt
-
+from PyQt5.QtGui import QKeySequence
 
 
 class MainWindow(QMainWindow):
@@ -57,6 +57,15 @@ class MainWindow(QMainWindow):
 
         self.chart = QChart()
         self.chart_view = QChartView(self.chart)
+        self.axis_y=QValueAxis()
+
+        self.axis_y.setRange(0, max([club.buts_marques for club in self.championnat.clubs]) + 5)
+        self.chart.addAxis(self.axis_y, Qt.AlignLeft)
+        self.axis_x = QBarCategoryAxis()
+        categories = [club.nom for club in self.championnat.clubs]
+        self.axis_x.append(categories)
+        self.chart.addAxis(self.axis_x, Qt.AlignBottom)
+
 
     def sauvegarder_resultats(self):
         fichier = self.text_fichier.text()
@@ -103,18 +112,11 @@ class MainWindow(QMainWindow):
 
         self.chart.addSeries(series)
 
-        categories = [club.nom for club in self.championnat.clubs]
-        axis_x = QBarCategoryAxis()
-        axis_x.append(categories)
-        self.chart.addAxis(axis_x, Qt.AlignBottom)
-        series.attachAxis(axis_x)
-
-        axis_y = QValueAxis()
-        axis_y.setRange(0, max([club.buts_marques for club in self.championnat.clubs]) + 5)
-        self.chart.addAxis(axis_y, Qt.AlignLeft)
-        series.attachAxis(axis_y)
-        self.chart_view.showFullScreen()
-
+        series.attachAxis(self.axis_x)
+        series.attachAxis(self.axis_y)
+        self.chart_view.resize(800,600)
+        self.chart_view.close()
+        self.chart_view.show()
         # self.layout.addWidget(self.chart_view)
 
     def afficher_journee_resultats(self, journee):
