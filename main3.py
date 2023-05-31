@@ -55,6 +55,9 @@ class MainWindow(QMainWindow):
 
         self.widget_f.setLayout(self.layout)
 
+        self.chart = QChart()
+        self.chart_view = QChartView(self.chart)
+
     def sauvegarder_resultats(self):
         fichier = self.text_fichier.text()
 # On fait une exeption ici pour que l"='eereur s'affiche dans l'interface.
@@ -64,8 +67,7 @@ class MainWindow(QMainWindow):
                     lignes = []
                     for colonne in range(self.table.columnCount()):
                         lignes.append(self.table.item(ligne, colonne).text())
-  # Ajoute une chaîne vide si l'element est None
-                    f.write("\t".join(lignes) + "\n")  # ecrit les donnees de la ligne separees par une tabulation
+                    f.write("\t".join(lignes) + "\n")
 
             QMessageBox.information(self, "Sauvegarde reussie", "Les resultats ont ete sauvegardes avec succès.")
         except Exception as e:
@@ -90,30 +92,30 @@ class MainWindow(QMainWindow):
         self.table.setRowCount(0)
         self.table.setColumnCount(0)
 
-        chart = QChart()
-
         bar_set = QBarSet("Buts marques")
         for club in self.championnat.clubs:
              bar_set.append(club.buts_marques)
+        if len(self.chart.series()) > 0:
+            self.chart.removeSeries(self.chart.series()[0])
 
         series = QBarSeries()
         series.append(bar_set)
 
-        chart.addSeries(series)
+        self.chart.addSeries(series)
 
         categories = [club.nom for club in self.championnat.clubs]
         axis_x = QBarCategoryAxis()
         axis_x.append(categories)
-        chart.addAxis(axis_x, Qt.AlignBottom)
+        self.chart.addAxis(axis_x, Qt.AlignBottom)
         series.attachAxis(axis_x)
 
         axis_y = QValueAxis()
         axis_y.setRange(0, max([club.buts_marques for club in self.championnat.clubs]) + 5)
-        chart.addAxis(axis_y, Qt.AlignLeft)
+        self.chart.addAxis(axis_y, Qt.AlignLeft)
         series.attachAxis(axis_y)
+        self.chart_view.showFullScreen()
 
-        chart_view = QChartView(chart)
-        self.layout.addWidget(chart_view)
+        # self.layout.addWidget(self.chart_view)
 
     def afficher_journee_resultats(self, journee):
         nb_teams = len(self.championnat.clubs)
