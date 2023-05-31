@@ -57,9 +57,9 @@ class Match:
 
         #on attribue les buts marques aux joueurs de l'equipe à domicile
         for j in range(self.buts_dom):
-            a=r.randint(1, 11)
+            a=r.randint(1, 10)
             if a<6: #si c'est un defenseur, on refait le test aleatoire pour baisser la probabilite que ce soit un defenseur qui marque
-                a = r.randint(1, 11)
+                a = r.randint(1, 10)
             self.equipe_dom.joueurs[a].evol_buts(1) #on ajoute un but au joueur selectionne
 
         #on reitère avec l'equipe à l'exterieur
@@ -67,9 +67,9 @@ class Match:
             joueur.evol_notejoueur([self.score[1],self.score[0]])
 
         for j in range(self.buts_ext):
-            a=r.randint(0, 10)
+            a=r.randint(1, 10)
             if a<6:
-                a = r.randint(0, 10)
+                a = r.randint(1, 10)
             self.equipe_ext.joueurs[a].evol_buts(1)
 
         #mise à jour des notes des clubs
