@@ -19,8 +19,6 @@ class Championnat:
         #on separe en deux les équipes
         groupe1 = self.clubs[:len(self.clubs)//2]
         groupe2 = self.clubs[len(self.clubs) // 2:]
-        print(groupe1[0])
-        print(groupe2[0])
         # on crée tous les matches selon la méthode de rotation autour du premier élément
         for i in range(len(self.clubs)-1):
             for n in range(len(groupe1)):

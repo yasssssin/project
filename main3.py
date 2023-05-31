@@ -23,7 +23,7 @@ class MainWindow(QMainWindow):
         #Créations des buttons et input box pour l'interface.
 
         self.results_button = QPushButton("Afficher les résultats du championnat", self)
-        self.results_button.clicked.connect(self.afficher_results)
+        self.results_button.clicked.connect(self.afficher_resultats)
         self.layout.addWidget(self.results_button)
 
         self.stats_button = QPushButton("Afficher les statistiques des équipes", self)
@@ -75,7 +75,7 @@ class MainWindow(QMainWindow):
         except Exception as e:
             QMessageBox.warning(self, "Erreur", f"Erreur lors de la sauvegarde : {str(e)}")
 
-    def afficher_results(self):
+    def afficher_resultats(self):
         self.table.clear()
         self.table.setRowCount(len(self.championnat.clubs))
         self.table.setColumnCount(4)
