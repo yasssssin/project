@@ -23,11 +23,11 @@ class MainWindow(QMainWindow):
         #Créations des buttons et input box pour l'interface.
 
         self.boutton_resultats = QPushButton("Afficher les résultats du championnat", self)
-        self.bouton_resultats.clicked.connect(self.afficher_resultats)
-        self.layout.addWidget(self.bouton_resultats)
+        self.boutton_resultats.clicked.connect(self.afficher_resultats)
+        self.layout.addWidget(self.boutton_resultats)
 
         self.boutton_stats = QPushButton("Afficher les statistiques des équipes", self)
-        self.bouton_stats.clicked.connect(self.afficher_stats)
+        self.boutton_stats.clicked.connect(self.afficher_stats)
         self.layout.addWidget(self.boutton_stats)
 
         self.label_fichier = QLabel("Nom du fichier:")
@@ -39,7 +39,7 @@ class MainWindow(QMainWindow):
 
         self.boutton_sauvegarder = QPushButton("Sauvegarder")
         self.boutton_sauvegarder.clicked.connect(self.sauvegarder_resultats)
-        self.layout.addWidget(self.button_sauvegarder)
+        self.layout.addWidget(self.boutton_sauvegarder)
 
         self.journée_label = QLabel("Sélectionnez une journée de match pour voir les résultats :")
         self.layout.addWidget(self.journée_label)
@@ -117,7 +117,7 @@ class MainWindow(QMainWindow):
         series.attachAxis(axis_y)
 
         chart_view = QChartView(chart)
-        chart_view.setRenderHint(QPainter.Antialiasing)
+        # chart_view.setRenderHint(QPainter.Antialiasing)
 
         self.layout.addWidget(chart_view)
 
