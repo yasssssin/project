@@ -37,6 +37,8 @@ class MainWindow(QMainWindow):
 
 
 
+
+
         self.boutton_sauvegarder = QPushButton("Sauvegarder")
         self.boutton_sauvegarder.clicked.connect(self.sauvegarder_resultats)
         self.layout.addWidget(self.boutton_sauvegarder)
