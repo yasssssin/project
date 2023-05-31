@@ -1,9 +1,9 @@
 import sys
+import script_championnat
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget, QTableWidget, QTableWidgetItem, QLabel, QHeaderView, QComboBox,QLineEdit,QMessageBox
 from PyQt5.QtChart import QChart, QChartView, QBarSet, QBarSeries, QBarCategoryAxis, QValueAxis
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPainter
-import script_championnat
+
 
 
 class MainWindow(QMainWindow):
@@ -35,24 +35,21 @@ class MainWindow(QMainWindow):
         self.layout.addWidget(self.label_fichier)
         self.layout.addWidget(self.text_fichier)
 
-
-
-
-
         self.boutton_sauvegarder = QPushButton("Sauvegarder")
         self.boutton_sauvegarder.clicked.connect(self.sauvegarder_resultats)
         self.layout.addWidget(self.boutton_sauvegarder)
 
         self.journee_label = QLabel("Selectionnez une journee de match pour voir les resultats :")
         self.layout.addWidget(self.journee_label)
-
+# choix déroulant de la journée à afficher
         self.journee_combo = QComboBox()
-        for i in range(1, int(len(self.matches) / len(self.championnat.clubs)) + 1):
-            self.journee_combo.addItem(f"Journee {i}")
+        for i in range(1, 2*(len(self.championnat.clubs)-1)+1):
+            self.journee_combo.addItem("Journee {}".format(i))
         self.layout.addWidget(self.journee_combo)
 
         self.journee_combo.currentIndexChanged.connect(self.afficher_journee_resultats)
 
+#création de la table pour y mettre les résultats(table partagée pour tous les résultats)
         self.table = QTableWidget()
         self.layout.addWidget(self.table)
 
@@ -119,8 +116,6 @@ class MainWindow(QMainWindow):
         series.attachAxis(axis_y)
 
         chart_view = QChartView(chart)
-        # chart_view.setRenderHint(QPainter.Antialiasing)
-
         self.layout.addWidget(chart_view)
 
     def afficher_journee_resultats(self, journee):
@@ -144,7 +139,7 @@ class MainWindow(QMainWindow):
 
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
-if __name__ == "__main__":
+def lancerlesimulateur():
     app = QApplication(sys.argv)
 
     ligue1 = script_championnat.Championnat()
@@ -154,3 +149,4 @@ if __name__ == "__main__":
     main_window.show()
 
     sys.exit(app.exec_())
+
