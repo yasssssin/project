@@ -38,5 +38,3 @@ class Championnat:
     # accesseurs
     def get_clubs(self):
         return self.clubs
-
-
